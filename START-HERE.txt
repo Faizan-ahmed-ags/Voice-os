@@ -1,0 +1,58 @@
+JARVIS VOICE 0.3.1 - WINDOWS INSTALLER
+
+INSTALL
+1. Quit the old JARVIS notch (right-click it, then Quit).
+2. Open JARVIS-Voice-Setup-0.3.1-x64.exe.
+3. Windows requests administrator permission to install in Program Files.
+4. Keep the default folder: C:\Program Files\JARVIS Voice.
+5. Finish, then open JARVIS Voice from your Desktop or Start menu.
+
+Python, Tcl/Tk, and the microphone libraries are included. You do not need
+to install Python, run pip, use a terminal, or download an AI model.
+The installer is unsigned. It does not have a verified publisher certificate.
+
+FIRST USE
+1. Choose your microphone and click Test microphone. Speak: bars should move.
+   This test needs no key and uploads no audio.
+2. Click Test voice to hear the installed Windows voice. No ElevenLabs needed.
+3. Add/keep your GROQ API key (not xAI GROK), keep language auto, then
+   click Save & use notch. Your previous saved key is reused when readable.
+4. Click inside Notepad or another text field.
+5. Tap RIGHT CTRL + RIGHT ALT together, then release both. Speak.
+6. Repeat that same short chord to stop and transcribe.
+
+Clicking the main notch also starts/stops recording. Its gear opens Settings.
+You can choose F8, the left Ctrl+Alt pair, or Click only in Settings.
+If your keyboard has no Right Ctrl, use one of those alternatives.
+Do not hold the chord for more than two seconds; it is a toggle gesture.
+Right Alt/AltGr by itself does not trigger JARVIS.
+Esc cancels a recording. The notch stays at the top center of your primary screen.
+
+NO KEYBOARD OPTION
+Settings -> Start dictation in 3 seconds -> click your text field.
+
+VOICE AND SPEECH
+Windows speech playback is local. Desktop transcription sends your recording
+to Groq after you stop; internet, a valid Groq key, and account quota are needed.
+There is no JARVIS subscription. Provider limits or charges still apply.
+If Groq is unavailable, select a text field and use Windows dictation with Win+H.
+Windows owns that separate dictation panel and its language/service requirements.
+
+IF SOMETHING FAILS
+No bars: select a different input and check Windows Settings -> Privacy &
+security -> Microphone -> allow desktop apps to access your microphone.
+Bars but no text: check your Groq key, internet connection, and quota.
+Text not inserted: Settings -> Copy last text, then Ctrl+V in your target app.
+Start with a normal, non-administrator Notepad window.
+Startup error details: %LOCALAPPDATA%\JARVISVoice\startup.log
+Settings and encrypted key: %LOCALAPPDATA%\JARVISVoice\settings.json
+Never send anyone your API key.
+
+REMOVE OR UPDATE
+Quit JARVIS before installing an update or uninstalling.
+Windows Settings -> Apps -> Installed apps -> JARVIS Voice -> Uninstall.
+Uninstall removes installed app files and shortcuts. Your user settings remain.
+To erase those too, manually remove %LOCALAPPDATA%\JARVISVoice after quitting.
+
+This is an independently built app; it is not the original VoiceOS software.
+See VALIDATION.md for the exact tests and remaining hardware verification.

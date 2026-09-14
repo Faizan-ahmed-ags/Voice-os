@@ -1,0 +1,40 @@
+JARVIS Voice Windows distribution
+
+The runtime is bundled privately for this application. It does not register
+Python globally or change PATH. Component licenses remain in the distribution.
+
+CPython 3.13.15 for Windows x64
+Source: https://www.python.org/ftp/python/3.13.15/amd64/
+License and bundled dependency notices: runtime\LICENSE.txt
+Includes OpenSSL, libffi, and Microsoft runtime notices. See that file for
+redistribution terms for Microsoft Distributable Code. Those terms apply to
+recipients who redistribute this package, including the restrictions on altering
+Microsoft notices, implying endorsement, and distributing for other platforms.
+
+Tcl/Tk 8.6
+Bundled in the official CPython tcltk.msi.
+Notices: licenses\Tcl-LICENSE.txt and runtime\tcl\tk8.6\license.terms
+
+python-sounddevice 0.5.3 (MIT)
+Source: https://pypi.org/project/sounddevice/0.5.3/
+License: runtime\Lib\site-packages\sounddevice-0.5.3.dist-info\licenses\LICENSE
+
+PortAudio (MIT)
+Source: https://github.com/PortAudio/portaudio
+License: licenses\PortAudio-LICENSE.txt
+The standard Windows PortAudio DLL is included. The optional ASIO DLL is omitted.
+
+CFFI 2.1.1 (MIT)
+Source: https://pypi.org/project/cffi/2.1.1/
+License: runtime\Lib\site-packages\cffi-2.1.1.dist-info\licenses\LICENSE
+
+pycparser 3.0 (BSD-3-Clause)
+Source: https://pypi.org/project/pycparser/3.0/
+License: runtime\Lib\site-packages\pycparser-3.0.dist-info\licenses\LICENSE
+
+NSIS 3.09
+Source: https://nsis.sourceforge.io/
+License: licenses\NSIS-COPYING.txt
+
+No binaries, branding assets, or source code from the supplied VoiceOS installer
+are included in this distribution. JARVIS is not affiliated with VoiceOS.
