@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "obsidian-brain": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:\\Users\\Faizan\\Documents\\JARVIS-Memory"
+      ]
+    }
+  }
+}

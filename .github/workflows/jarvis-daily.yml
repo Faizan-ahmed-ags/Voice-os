@@ -1,0 +1,90 @@
+# JARVIS daily cloud cycle — runs the full learn->predict->trade loop on
+# GitHub Actions (free), so the agent trades even when the laptop is off.
+#
+# Schedule: 13:40 UTC Mon-Fri (just after US market open — fills match the
+# backtest). The `data/` directory (SQLite ledger, models, lessons, memory) is
+# committed to the `agent-memory` branch between runs, so the agent accumulates
+# history and learns over time.
+#
+# Setup (one time, in the GitHub repo UI):
+#   Settings -> Secrets and variables -> Actions -> New repository secret
+#     GROQ_API_KEY        — the brain (already have the key)
+#     ALPACA_KEY_ID       — free paper account keys from alpaca.markets
+#     ALPACA_SECRET_KEY
+#   Then: Actions tab -> "I understand, enable workflows".
+name: jarvis-daily
+
+on:
+  schedule:
+    - cron: "40 13 * * 1-5"   # 13:40 UTC Mon–Fri, just after US open
+  workflow_dispatch: {}        # manual "Run workflow" button for testing
+
+permissions:
+  contents: write              # the agent commits its own memory back
+
+concurrency:
+  group: jarvis-daily
+  cancel-in-progress: false
+
+jobs:
+  daily-cycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install brain dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Restore agent memory (data/ from agent-memory branch)
+        run: |
+          git fetch origin agent-memory || true
+          git checkout origin/agent-memory -- data/ 2>/dev/null \
+            || echo "first run: no memory yet, starting fresh"
+
+      - name: Daily cycle — learn → predict → trade
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_MODEL: openai/gpt-oss-120b
+          ALPACA_KEY_ID: ${{ secrets.ALPACA_KEY_ID }}
+          ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
+          JARVIS_BROKER: alpaca          # cloud runs route orders to Alpaca paper
+          TRADING_MODE: paper
+          ALLOW_LIVE_TRADING: "false"    # hard ceiling: paper only, ever
+        run: |
+          python -m brain.main run-once
+          python - <<'PY'
+          from brain.learner import reconcile, reflect
+          rec = reconcile()
+          lessons = reflect()
+          print("reconcile:", rec, "| new lessons:", lessons)
+          PY
+
+      - name: Journal the day
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          python - <<'PY'
+          from brain import daily
+          import json
+          print(json.dumps(daily.status(), indent=1, default=str)[:2000])
+          PY
+
+      - name: Save agent memory (commit data/ to agent-memory branch)
+        run: |
+          git config user.name "jarvis-agent"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f data/
+          if git diff --cached --quiet; then
+            echo "no memory changes this run"
+            exit 0
+          fi
+          git commit -m "agent memory: $(date -u +%F) cycle [skip ci]"
+          git push origin HEAD:agent-memory --force

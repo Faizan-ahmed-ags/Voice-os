@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: oklch(0.145 0 0);
+  --color-foreground: oklch(0.985 0 0);
+  --color-card: oklch(0.205 0 0);
+  --color-card-foreground: oklch(0.985 0 0);
+  --color-primary: oklch(0.705 0.213 47.604);
+  --color-primary-foreground: oklch(0.98 0.016 73.684);
+  --color-secondary: oklch(0.274 0 0);
+  --color-secondary-foreground: oklch(0.985 0 0);
+  --color-muted: oklch(0.269 0 0);
+  --color-muted-foreground: oklch(0.708 0 0);
+  --color-accent: oklch(0.274 0 0);
+  --color-accent-foreground: oklch(0.985 0 0);
+  --color-destructive: oklch(0.704 0.191 22.216);
+  --color-border: oklch(1 0 0 / 10%);
+  --color-input: oklch(1 0 0 / 15%);
+  --color-ring: oklch(0.556 0 0);
+  --color-success: oklch(0.72 0.17 162);
+  --color-warning: oklch(0.83 0.16 84);
+}
+
+/* ---------------- light theme (activated by .light on <html>) ---------------- */
+/* Tailwind v4 @theme tokens are root-scoped; the selector list overrides them */
+/* globally without touching the emitted utilities.                            */
+:root:has(.theme-scope.light),
+.theme-scope.light {
+  --color-background: oklch(0.972 0.004 80);
+  --color-foreground: oklch(0.22 0.01 60);
+  --color-card: oklch(0.995 0.003 85);
+  --color-card-foreground: oklch(0.22 0.01 60);
+  --color-primary: oklch(0.60 0.19 45);
+  --color-primary-foreground: oklch(0.985 0.01 80);
+  --color-secondary: oklch(0.93 0.006 80);
+  --color-secondary-foreground: oklch(0.28 0.01 60);
+  --color-muted: oklch(0.945 0.005 80);
+  --color-muted-foreground: oklch(0.50 0.012 65);
+  --color-accent: oklch(0.935 0.008 75);
+  --color-accent-foreground: oklch(0.28 0.01 60);
+  --color-destructive: oklch(0.577 0.215 27.3);
+  --color-border: oklch(0.22 0.01 60 / 14%);
+  --color-input: oklch(0.22 0.01 60 / 20%);
+  --color-ring: oklch(0.62 0.02 65);
+  --color-success: oklch(0.60 0.14 155);
+  --color-warning: oklch(0.72 0.14 75);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+/* faint HUD grid behind everything */
+.hud-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.theme-scope.light .hud-grid {
+  background-image:
+    linear-gradient(rgba(80, 70, 60, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 70, 60, 0.05) 1px, transparent 1px);
+}
+
+/* green/red are hardcoded in a few spots (calendar cells, BUY/SELL badges);
+   keep them readable in light mode via the scoped palette swap. */
+.theme-scope.light .text-emerald-400 { color: oklch(0.55 0.14 155); }
+.theme-scope.light .text-red-400 { color: oklch(0.52 0.19 27); }
+.theme-scope.light .text-red-300 { color: oklch(0.5 0.19 27); }
+.theme-scope.light .text-amber-400 { color: oklch(0.6 0.13 70); }
+.theme-scope.light .bg-emerald-950\/40 { background-color: oklch(0.93 0.05 155); }
+.theme-scope.light .bg-red-950\/40 { background-color: oklch(0.94 0.03 27); }
+.theme-scope.light .bg-red-950\/30 { background-color: oklch(0.94 0.03 27); }
+.theme-scope.light .border-emerald-900\/60 { border-color: oklch(0.7 0.1 155 / 60%); }
+.theme-scope.light .border-red-900\/60 { border-color: oklch(0.7 0.08 27 / 60%); }
+
+/* theme toggle button */
+.theme-toggle {
+  color: var(--color-muted-foreground);
+}
+.theme-toggle:hover {
+  color: var(--color-foreground);
+}
